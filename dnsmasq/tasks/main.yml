@@ -1,0 +1,28 @@
+---
+- name: install dnsmasq
+  apt: name="dnsmasq" state=present
+  tags: dnsmasq
+
+- name: Bind dnsmasq to localhost and docker bridge
+  lineinfile: dest=/etc/dnsmasq.conf state=present line="{{item}}"
+  with_items:
+   - "listen-address=127.0.0.1"
+   - "listen-address={{ ansible_docker0['ipv4']['address'] }}"
+
+- name: configure consul resolution dnsmasq
+  template:
+    src: 10-consul.j2
+    dest: /etc/dnsmasq.d/10-consul
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart dnsmasq
+  tags: dnsmasq
+
+- name: make sure dnsmasq is running
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+  tags: dnsmasq
