@@ -1,7 +1,13 @@
 ---
+- name: Gather Facts
+  action: setup
+
 - name: install dnsmasq
   apt: name="dnsmasq" state=present
   tags: dnsmasq
+
+- name: Gathering facts again
+  action: setup
 
 - name: Bind dnsmasq to localhost and docker bridge
   lineinfile: dest=/etc/dnsmasq.conf state=present line="{{item}}"
