@@ -2,6 +2,9 @@
   roles:
   - role: docker
   - role: dnsmasq
+
+- hosts: localhost
+  roles:
   - role: consul
     consul_servers:
     - "172.26.202.230"
