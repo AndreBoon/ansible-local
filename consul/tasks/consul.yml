@@ -1,0 +1,30 @@
+- name: Install python-consul
+  pip:  name=python-consul  state=present
+
+- name: Ensure directory exists
+  file:
+    path: "{{consul_dir_config}}"
+    state: directory
+
+- name: "templating consul-config"
+  template:
+    src: consul-config.json.j2
+    dest: "{{consul_dir_config}}/consul-config.json"
+
+- name: Pull consul docker image
+  docker_image:
+    name: "{{consul_image}}"
+    tag: "{{consul_version}}"
+
+- name: run consul
+  docker_container:
+    name: consul
+    image: "{{ consul_image }}:{{consul_version}}"
+    state: started
+    recreate: true
+    detach: true
+    restart_policy: False
+    network_mode: host
+    hostname: "{{ ansible_hostname }}"
+    volumes: "{{consul_volumes}}"
+    command: agent

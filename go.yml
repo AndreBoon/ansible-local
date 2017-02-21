@@ -1,4 +1,12 @@
 - hosts: localhost
   roles:
-     - docker
-     - dnsmasq
+  - role: docker
+  - role: dnsmasq
+  - role: consul
+    consul_servers:
+    - "172.26.202.230"
+    consul_is_server: true
+    consul_client_address_bind: true
+    consul_datacenter: dc2
+    tags: consul
+
