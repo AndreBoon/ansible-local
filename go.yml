@@ -11,5 +11,6 @@
     consul_is_server: true
     consul_client_address_bind: true
     consul_datacenter: dc2
+    consul_acl_datacenter: dc2
     tags: consul
 
