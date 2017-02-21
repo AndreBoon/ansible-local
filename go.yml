@@ -13,4 +13,8 @@
     consul_datacenter: dc2
     consul_acl_datacenter: dc2
     tags: consul
+  - role: nomad
+    nomad_servers:
+    - "172.26.202.230"
+
 
