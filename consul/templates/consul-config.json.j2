@@ -50,7 +50,8 @@
   "client_addr": "{{ consul_client_address }}",
   "addresses" : {
     "rpc": "127.0.0.1",
-    "dns": "172.17.0.1"
+    "dns": "172.17.0.1",
+    "http": "0.0.0.0"
   },
 {% endif %}
 {% if consul_dynamic_bind == false and consul_bind_address is defined and consul_bind_address is not none %}

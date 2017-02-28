@@ -27,7 +27,6 @@ server {
 # Enable the client
 client {
     enabled = true
-    servers = ["{{ ansible_eth0['ipv4']['address'] }}"] 
     options {
         "docker.cleanup.image" = "1"
         "driver.raw_exec.enable" = "1"
