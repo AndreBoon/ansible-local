@@ -1,8 +1,12 @@
 ---
   - name: install packages
-    apt: name={{ item }} update_cache=yes
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      state: latest
+      install_recommends: no
     with_items:
-      - python-pip 
+      - python-pip
 
   - name: Install Docker-Py
     pip: name=docker-py state=present
