@@ -1,12 +1,17 @@
 - hosts: localhost
-# Lets template
   tasks:
-    # Download M2 nomad file
     - get_url:
-#         url: "{{ nexus_url }}"
-         url: "{{ nexus_url }}"
+         url: "{{ nexus_url }}/{{ item }}.json"
          url_password: "{{ nexus_password }}"
          url_username: "{{ nexus_username }}"
-         dest: /tmp/service.json
+         dest: /tmp/{{ item }}.json
+      with_items:
+        - service
+        - deployment
+        - routes
 
-    - shell: docker cp /tmp/service.json consul:/tmp && docker exec consul consul kv import @/tmp/service.json
+    - shell: docker cp /tmp/{{ item }}.json consul:/tmp && docker exec consul consul kv import @/tmp/{{ item }}.json
+      with_items:
+        - service
+        - deployment
+        - routes
