@@ -8,3 +8,5 @@
          url_password: "{{ nexus_password }}"
          url_username: "{{ nexus_username }}"
          dest: /tmp/service.json
+
+    - shell: docker cp /tmp/service.json consul:/tmp && docker exec consul consul kv import @/tmp/service.json
