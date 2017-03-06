@@ -1,0 +1,10 @@
+- hosts: localhost
+# Lets template
+  tasks:
+    # Download M2 nomad file
+    - get_url:
+#         url: "{{ nexus_url }}"
+         url: "{{ nexus_url }}"
+         url_password: "{{ nexus_password }}"
+         url_username: "{{ nexus_username }}"
+         dest: /tmp/service.json
