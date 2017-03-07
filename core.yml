@@ -5,8 +5,6 @@
 
   tasks:
 
-    - include_vars: nomadenv.yml
-
     - get_url:
          url: "{{ nexus_url }}/core.nomad.j2"
          url_password: "{{ nexus_password }}"
