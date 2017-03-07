@@ -9,7 +9,7 @@
     - /opt/nomad
     - /var/nomad
     - /var/run/nomad
-    - /etc/nomad
+    - /etc/nomad/jobs
 
 - name: Server configuration
   template: src=server.hcl.j2 dest={{ nomad_config_dir }}/server.hcl
