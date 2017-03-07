@@ -16,6 +16,10 @@
         - haproxy
         - nginx
 
+    - wait_for:
+        port: 4646
+        delay: 2
+
     - command: nomad run /etc/nomad/jobs/{{ build | default('latest') }}.{{ item }}.nomad
       with_items:
         - haproxy
