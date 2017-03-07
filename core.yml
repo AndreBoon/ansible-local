@@ -1,0 +1,24 @@
+- name: Infra core system deployment
+  hosts: localhost
+  vars:
+    build: latest
+
+  tasks:
+
+    - include_vars: nomadenv.yml
+
+    - get_url:
+         url: "{{ nexus_url }}/core.nomad.j2"
+         url_password: "{{ nexus_password }}"
+         url_username: "{{ nexus_username }}"
+         dest: /tmp/core.nomad.j2
+
+    - template: src=/tmp/core.nomad.j2 dest=/etc/nomad/jobs/{{ build | default('latest') }}.{{ item }}.nomad mode="u=rw,g=r,o=r"
+      with_items:
+        - haproxy
+        - nginx
+
+    - command: nomad run /etc/nomad/jobs/{{ build | default('latest') }}.{{ item }}.nomad
+      with_items:
+        - haproxy
+        - nginx
