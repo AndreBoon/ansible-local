@@ -1,0 +1,31 @@
+- name: M2 deploy service
+  hosts: localhost
+  vars:
+    build: latest
+    deployment: blue
+    tag: 
+    type: app 
+
+  tasks:
+
+    - get_url:
+         url: "{{ nexus_url }}/deploy.nomad.j2"
+         url_password: "{{ nexus_password }}"
+         url_username: "{{ nexus_username }}"
+         dest: /tmp/deploy.nomad.j2
+
+    - template: src=/tmp/deploy.nomad.j2 dest=/etc/nomad/jobs/{{ build | default('latest') }}.{{ item }}.nomad mode="u=rw,g=r,o=r"
+      with_items:
+        - beheren-account
+        - beheren-groep
+        - dashboard 
+
+    - wait_for:
+        port: 4646
+        delay: 2
+
+    - command: nomad run /etc/nomad/jobs/{{ build | default('latest') }}.{{ item }}.nomad
+      with_items:
+        - beheren-account
+        - beheren-groep
+        - dashboard
