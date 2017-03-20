@@ -7,7 +7,11 @@
     mongodb_repository_data: "{{mongodb_repository_config[mongodb_major_minor_version]}}"
 
 - name: Add APT key
-  apt_key: keyserver=keyserver.ubuntu.com:80 id=0C49F3730359A14518585931BC711F9BA15703C6
+  sudo: yes
+  apt_key: 
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 7F0CEB10
+    state: present
 
 - name: Add APT repository
   apt_repository: repo="{{mongodb_repository_data.repository}}" update_cache=yes
