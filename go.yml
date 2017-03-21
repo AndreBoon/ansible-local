@@ -1,13 +1,13 @@
-- hosts: localhost
+- hosts: "{{ hosts }}" 
   roles:
   - role: docker
   - role: dnsmasq
 
-- hosts: localhost
+- hosts: "{{ hosts }}"
   roles:
   - role: consul
     consul_servers:
-    - "172.26.202.230"
+    - "{{ ansible_eth0.ipv4.address }}" 
     consul_is_server: true
     consul_client_address_bind: true
     consul_datacenter: dc2
@@ -15,6 +15,4 @@
     tags: consul
   - role: nomad
     nomad_servers:
-    - "172.26.202.230"
-
-
+    - "{{ ansible_eth0.ipv4.address }}"
